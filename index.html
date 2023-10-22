@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proxy Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 500px; /* Increase the width */
+            height: 400px; /* Increase the height */
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #proxyResults {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        pre {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Proxy </h1>
+        <p>Enter the number of proxies you need:</p>
+        <input type="number" id="numProxies" placeholder="Enter the number of proxies" required>
+        <button onclick="getProxies()">Generate Proxies</button>
+        <div id="proxyResults"></div>
+    </div>
+
+    <script>
+        function getProxies() {
+            const numProxies = document.getElementById("numProxies").value;
+            const apiUrl = `proxy.php?country=random&numProxies=${numProxies}`;
+
+            fetch(apiUrl)
+                .then(response => response.text())
+                .then(data => {
+                    const proxyResults = document.getElementById("proxyResults");
+                    proxyResults.innerHTML = "<h2>Proxies:</h2><pre>" + data + "</pre>";
+                })
+                .catch(error => {
+                    const proxyResults = document.getElementById("proxyResults");
+                    proxyResults.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
